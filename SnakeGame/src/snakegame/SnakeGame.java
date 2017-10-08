@@ -19,24 +19,41 @@ import javafx.stage.Stage;
  */
 public class SnakeGame extends Application {
     
+    
+    
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Ola mundos'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+        Button btnJogar = new Button();
+        btnJogar.setTranslateX(-100);
+        btnJogar.setText("JOGAR");
+        btnJogar.setOnAction(new EventHandler<ActionEvent>() {
             
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Hello World!");
+                //Jogar
+            }
+        });
+        
+         Button btnTutorial = new Button();
+         btnTutorial.setTranslateX(200);
+         btnTutorial.setText("TUTORIAL");
+        btnTutorial.setOnAction(new EventHandler<ActionEvent>() {
+            
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Hello World!");
+                //Tutorial
             }
         });
         
         StackPane root = new StackPane();
-        root.getChildren().add(btn);
+        root.getChildren().add(btnJogar);
+        root.getChildren().add(btnTutorial);
         
-        Scene scene = new Scene(root, 300, 250);
+        Scene scene = new Scene(root, 800, 500);
         
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("Snake game");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
