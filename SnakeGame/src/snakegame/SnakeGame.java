@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -25,6 +26,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 /**
  *
@@ -70,6 +72,14 @@ public class SnakeGame extends Application {
         int ty = (int)(Math.random() * (APP_H/*-BLOCK_SIZE*/))/ BLOCK_SIZE * BLOCK_SIZE;
         food.setTranslateX(tx);
         food.setTranslateY(ty); // setting x, and y of food to random value);
+        
+        int foodNumber = (int) Math.random() * 30;
+        Text foodText = new Text(Integer.toString(foodNumber));// setting the number of the food
+        foodText.setTextOrigin(VPos.TOP);
+        foodText.setLayoutX(tx);
+        foodText.setLayoutY(ty);
+        
+        
         
         KeyFrame frame = new KeyFrame(/* KeyFrame is like a single frame in animation!!!*/ Duration.seconds(0.20 /*To increase difficulty lower the value*/), event -> {
             if(!running)
@@ -141,6 +151,7 @@ public class SnakeGame extends Application {
                
                 food.setTranslateX(fx);
                 food.setTranslateY(fy); // setting x, and y of food to random value);
+                
                
                
                 
@@ -151,7 +162,7 @@ public class SnakeGame extends Application {
         timeline.getKeyFrames().addAll(frame); // add frame to the timeline KeyFrames
         timeline.setCycleCount(Timeline.INDEFINITE); // it will always run same frame(there is any one frame to run
 
-        root.getChildren().addAll(food, snakeBody);
+        root.getChildren().addAll(food, snakeBody,foodText);
 
         return root;
     }
