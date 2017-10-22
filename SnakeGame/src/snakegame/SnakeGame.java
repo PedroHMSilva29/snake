@@ -219,6 +219,7 @@ public class SnakeGame extends Application {
               @Override
              public void handle(ActionEvent event) {
                 primaryStage.setTitle("Snake game");
+                primaryStage.setResizable(false);
                 primaryStage.setScene(scene);
                 primaryStage.show();
                 startGame();        
