@@ -1,14 +1,24 @@
 
 package snakegame;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -27,9 +37,7 @@ public class SnakeGame extends Application {
         UP, DOWN, LEFT, RIGHT
     }
 
-    
-
-    public static final int BLOCK_SIZE = 20;//size of 1 block
+    public static final int BLOCK_SIZE = 25;//size of 1 block
     public static final int APP_W = 20*BLOCK_SIZE; // application width
     public static final int APP_H = 15*BLOCK_SIZE; // application height
   
@@ -37,10 +45,7 @@ public class SnakeGame extends Application {
     private Direction direction = Direction.RIGHT; // default direction
     private boolean moved = false; // moving (don't allows moving in different directions at the same time
     private boolean running = false; // is our application running
-
-//    private Path p = Paths.get("." + File.separator +"LeaderBoard.txt");
-//    private File leaderBoard = new File("sample/LeaderBoard.txt");
-
+    Stage thestage;
     private Timeline timeline = new Timeline(); // our animation
 
     private ObservableList<Node> snake; // we will display and iterate over it nad our snake body, we will iterate over it.
@@ -49,22 +54,27 @@ public class SnakeGame extends Application {
        
         Pane root = new  Pane();
         root.setPrefSize(APP_W, APP_H); // setting pane's size
-        double getRootTX= root.getTranslateX();
-        double getRootTY = root.getTranslateY();
+        root.setBackground(new Background(new BackgroundFill(Color.web("#D3D3D3"), CornerRadii.EMPTY, Insets.EMPTY)));
+        
+        //root.set
+      
+    
 
         Group snakeBody = new Group(); // we get children from the group and assign them to our snake list below
         snake = snakeBody.getChildren();// snake list
 
-        
+         
         Rectangle food = new Rectangle(BLOCK_SIZE,BLOCK_SIZE);
         food.setFill(Color.BLUE);
-        food.setTranslateX((int)(Math.random() * (APP_W - BLOCK_SIZE)/*in order to stay within screen*/)/ BLOCK_SIZE * BLOCK_SIZE);
-        food.setTranslateY((int)(Math.random() * (APP_H - BLOCK_SIZE))/ BLOCK_SIZE * BLOCK_SIZE); // setting x, and y of food to random value);
+        int tx = (int)(Math.random() * (APP_W/*-BLOCK_SIZE*/))/ BLOCK_SIZE * BLOCK_SIZE;
+        int ty = (int)(Math.random() * (APP_H/*-BLOCK_SIZE*/))/ BLOCK_SIZE * BLOCK_SIZE;
+        food.setTranslateX(tx);
+        food.setTranslateY(ty); // setting x, and y of food to random value);
         
-        KeyFrame frame = new KeyFrame(/* KeyFrame is like a single frame in animation!!!*/ Duration.seconds(0.2 /*To increase difficulty lower the value*/), event -> {
+        KeyFrame frame = new KeyFrame(/* KeyFrame is like a single frame in animation!!!*/ Duration.seconds(0.20 /*To increase difficulty lower the value*/), event -> {
             if(!running)
                 return; //if not running just simple return
-
+            System.out.println("size:"+snake.size());
             boolean toRemove = snake.size() > 1; // at least two blocks in the snake body;
             Node tail = toRemove ? snake.remove(snake.size()-1) : snake.get(0); //
 
@@ -97,21 +107,44 @@ public class SnakeGame extends Application {
 
             //collision detection collision with itself!
             for(Node rect : snake) {
-                if(rect != tail && tail.getTranslateX() == rect.getTranslateX() && tail.getTranslateY() == rect.getTranslateY()) { // tail name is little confusing, cause it must be a head now!!!
-           
-                    restartGame();
+                if(rect != tail && tail.getTranslateX() == rect.getTranslateX() 
+                        && tail.getTranslateY() == rect.getTranslateY()) { try {
+                            // tail name is little confusing, cause it must be a head now!!!
+                            restartGame();
+                    } catch (Exception ex) {
+                        Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     break;
                 }
             }
-
-            if (tail.getTranslateX() == food.getTranslateX() && tail.getTranslateY() == food.getTranslateY()) {
-                food.setTranslateX((int)(Math.random() * (APP_W - BLOCK_SIZE)/*in order to stay within screen*/)/ BLOCK_SIZE * BLOCK_SIZE);
-                food.setTranslateY((int)(Math.random() * (APP_H - BLOCK_SIZE))/ BLOCK_SIZE * BLOCK_SIZE); // setting x, and y of food to random value);
+            
+            if(tail.getTranslateX() < 0 || tail.getTranslateX() > APP_W
+                    || tail.getTranslateY() <0 || tail.getTranslateY() > APP_H){
+                try {
+                    restartGame();
+                } catch (Exception ex) {
+                    Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            
+            if (tail.getTranslateX() == food.getTranslateX() 
+                    && tail.getTranslateY() == food.getTranslateY()) {
+                int fx =(int)(Math.random() * (APP_W /*-BLOCK_SIZE*/))/ BLOCK_SIZE * BLOCK_SIZE;
+                int fy =(int)(Math.random() * (APP_H /*-BLOCK_SIZE*/))/ BLOCK_SIZE * BLOCK_SIZE;
+                
                 Rectangle rect= new Rectangle(BLOCK_SIZE,BLOCK_SIZE);
                 rect.setTranslateX(tailX);
                 rect.setTranslateX(tailY);
                 
-                snake.add(rect); //adding rectangle to snake
+               snake.add(rect);
+               
+                food.setTranslateX(fx);
+                food.setTranslateY(fy); // setting x, and y of food to random value);
+               
+               
+                
+               // snake.add(rect); //adding rectangle to snake
             }
         });
 
@@ -123,17 +156,22 @@ public class SnakeGame extends Application {
         return root;
     }
 
- 
 
-    private void restartGame() {
-        stopGame();
-        startGame();
+    private void restartGame()throws Exception {
+         
+        
+       
+      
+     
+     stopGame();
+      startGame();
     }
 
     private void stopGame() {
         running = false;
         timeline.stop();
         snake.clear(); // clear the elements within snake list
+       
     }
 
     private void startGame() {
@@ -147,12 +185,12 @@ public class SnakeGame extends Application {
  
     @Override
     public void start(Stage primaryStage) throws Exception{
-        
+        thestage = primaryStage;
         Scene scene = new Scene(createContent());
-       
-        scene.setOnKeyPressed(event ->{
-            if(moved){
-                switch (event.getCode()) {
+         scene.setOnKeyPressed(event ->{
+            if(!moved)
+                return;
+            switch (event.getCode()) {
                 case W:
                     if (direction != Direction.DOWN)
                         direction = Direction.UP;
@@ -170,17 +208,45 @@ public class SnakeGame extends Application {
                         direction = Direction.RIGHT;
                     break;
             }
-            }
-            moved = false;
+                moved = false;
         });
-          
+         Button btn = new Button();
+         btn.setText("Jogar");
+         btn.setTranslateX(-100);
+         btn.setTranslateY(180);
+         btn.setOnAction(new EventHandler<ActionEvent>() {
+              
+              @Override
+             public void handle(ActionEvent event) {
+                primaryStage.setTitle("Snake game");
+                primaryStage.setScene(scene);
+                primaryStage.show();
+                startGame();        
+             }
+         });
          
-          
-        
-         primaryStage.setTitle("Snake game");
-         primaryStage.setScene(scene);
+         Button btnTutorial = new Button();
+         btnTutorial.setText("Tutorial");
+         btnTutorial.setTranslateX(100);
+         btnTutorial.setTranslateY(180);
+         btnTutorial.setOnAction(new EventHandler<ActionEvent>() {
+              
+              @Override
+             public void handle(ActionEvent event) {
+               //tutorial   
+             }
+         });
+         
+         StackPane root = new StackPane();
+         root.setId("pane");
+         root.getChildren().add(btn);
+         root.getChildren().add(btnTutorial);
+         
+         Scene scene2 = new Scene(root, 900, 500);
+         scene2.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
+         primaryStage.setTitle("Menu Snack Game");
+         primaryStage.setScene(scene2);
          primaryStage.show();
-         startGame();        
     }
 
     /**
