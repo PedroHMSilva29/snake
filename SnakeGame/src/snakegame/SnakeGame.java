@@ -77,7 +77,7 @@ public class SnakeGame extends Application {
         Rectangle food = new Rectangle(BLOCK_SIZE, BLOCK_SIZE);
         food.setFill(Color.web("#fa6b6b"));
         int tx = (int) (Math.random() * (APP_W/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
-        int ty = (int) (Math.random() * (APP_H /*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
+        int ty = 25 + (int) (Math.random() * (APP_H - 25/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
         food.setTranslateX(tx);
         food.setTranslateY(ty); // setting x, and y of food to random value);
         int foodNumber = answer;
@@ -91,7 +91,7 @@ public class SnakeGame extends Application {
         Rectangle poison = new Rectangle(BLOCK_SIZE, BLOCK_SIZE);
         poison.setFill(Color.web("#fa6b6b"));
         tx = (int) (Math.random() * (APP_W/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
-        ty = (int) (Math.random() * (APP_H/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
+        ty =  25 + (int) (Math.random() * (APP_H - 25/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
         poison.setTranslateX(tx);
         poison.setTranslateY(ty); // setting x, and y of poison to random value);
         int poisonNumber = (int) (Math.random() * 30);
@@ -173,7 +173,7 @@ public class SnakeGame extends Application {
             if (tail.getTranslateX() == food.getTranslateX()
                     && tail.getTranslateY() == food.getTranslateY()) {
                 int fx = (int) (Math.random() * (APP_W /*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
-                int fy = (int) (Math.random() * (APP_H /*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
+                int fy = 25 + (int) (Math.random() * (APP_H - 25/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
 
                 Rectangle rect = new Rectangle(BLOCK_SIZE, BLOCK_SIZE);
                 rect.setTranslateX(tailX);
@@ -190,7 +190,7 @@ public class SnakeGame extends Application {
                 food.setTranslateY(fy); // setting x, and y of food to random value);
 
                 fx = (int) (Math.random() * (APP_W/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
-                fy = (int) (Math.random() * (APP_H/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
+                fy = 25 + (int) (Math.random() * (APP_H - 25/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
                 poison.setTranslateX(fx);
                 poison.setTranslateY(fy); // setting x, and y of poison to random value);
                 poisonText.setText(Integer.toString((int)(Math.random() * 30)));
