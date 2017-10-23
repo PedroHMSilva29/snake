@@ -97,9 +97,15 @@ public class SnakeGame extends Application {
         poison.setFill(Color.web("#fa6b6b"));
         tx = (int) (Math.random() * (APP_W/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
         ty =  25 + (int) (Math.random() * (APP_H - 25/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
+        
         poison.setTranslateX(tx);
         poison.setTranslateY(ty); // setting x, and y of poison to random value);
-        int poisonNumber = (int) (Math.random() * 30);
+        int poisonNumber;
+        
+        do{
+        poisonNumber = (int) (Math.random() * 30);
+        }while(poisonNumber ==foodNumber || poisonNumber==0);
+        
         Text poisonText = new Text(Integer.toString(poisonNumber));// setting the number of the food
         poisonText.setFill(Color.web("#fff"));
         poisonText.setTextOrigin(VPos.TOP);
@@ -204,7 +210,12 @@ public class SnakeGame extends Application {
                 fy = 25 + (int) (Math.random() * (APP_H - 25/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
                 poison.setTranslateX(fx);
                 poison.setTranslateY(fy); // setting x, and y of poison to random value);
-                poisonText.setText(Integer.toString((int)(Math.random() * 30)));
+                int poisonNumber2;
+                do{
+                    poisonNumber2 = (int) (Math.random() * 30);
+                }while(poisonNumber2 ==answer || poisonNumber2 ==0);
+                
+                poisonText.setText(Integer.toString(poisonNumber2));
                 poisonText.setLayoutX(fx + 5);
                 poisonText.setLayoutY(fy);
 
@@ -247,6 +258,15 @@ public class SnakeGame extends Application {
     public void buildQuestion() {
         number1 = (int) (Math.random() * 30);
         number2 = (int) (Math.random() * 30);
+        
+        do{
+            number1 = (int) (Math.random() * 30);
+        }while(number1 == 0);
+            
+        do{
+            number2 = (int) (Math.random() * 30);
+        }while(number2 == 0);
+        
         answer = number1 + number2;
     }
 
