@@ -75,26 +75,28 @@ public class SnakeGame extends Application {
         question.setLayoutX(20);
 
         Rectangle food = new Rectangle(BLOCK_SIZE, BLOCK_SIZE);
-        food.setFill(Color.BLUE);
+        food.setFill(Color.web("#fa6b6b"));
         int tx = (int) (Math.random() * (APP_W/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
-        int ty = (int) (Math.random() * (APP_H/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
+        int ty = (int) (Math.random() * (APP_H /*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
         food.setTranslateX(tx);
         food.setTranslateY(ty); // setting x, and y of food to random value);
         int foodNumber = answer;
         Text foodText = new Text(Integer.toString(foodNumber));// setting the number of the food
+        foodText.setFill(Color.web("#fff"));
         foodText.setTextOrigin(VPos.TOP);
         foodText.setLayoutX(tx + 5);
         foodText.setLayoutY(ty);
 
         // Wrong Answer
         Rectangle poison = new Rectangle(BLOCK_SIZE, BLOCK_SIZE);
-        poison.setFill(Color.BLUE);
+        poison.setFill(Color.web("#fa6b6b"));
         tx = (int) (Math.random() * (APP_W/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
         ty = (int) (Math.random() * (APP_H/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
         poison.setTranslateX(tx);
         poison.setTranslateY(ty); // setting x, and y of poison to random value);
         int poisonNumber = (int) (Math.random() * 30);
         Text poisonText = new Text(Integer.toString(poisonNumber));// setting the number of the food
+        poisonText.setFill(Color.web("#fff"));
         poisonText.setTextOrigin(VPos.TOP);
         poisonText.setLayoutX(tx + 5);
         poisonText.setLayoutY(ty);
@@ -155,6 +157,17 @@ public class SnakeGame extends Application {
                 } catch (Exception ex) {
                     Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }
+            
+            
+            if (tail.getTranslateX() == poison.getTranslateX()
+                    && tail.getTranslateY() == poison.getTranslateY()) {
+                try {
+                    restartGame();
+                } catch (Exception ex) {
+                    Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    
             }
 
             if (tail.getTranslateX() == food.getTranslateX()
