@@ -71,6 +71,7 @@ public class SnakeGame extends Application {
         Rectangle scoreBar = new Rectangle(APP_W, 25);
         scoreBar.setFill(Color.web("#D3D3D3"));
         Text scoreText = new Text("Pontuação: " + score);
+        scoreText.setText("Pontuação: " + score);
         scoreText.setTextOrigin(VPos.TOP);
         scoreText.setLayoutX(APP_W - 100);
 
@@ -144,6 +145,8 @@ public class SnakeGame extends Application {
             for (Node rect : snake) {
                 if (rect != tail && tail.getTranslateX() == rect.getTranslateX()
                         && tail.getTranslateY() == rect.getTranslateY()) {
+                    score = 0;
+                    scoreText.setText("Pontuação: " + score);
                     try {
                         // tail name is little confusing, cause it must be a head now!!!
                         restartGame();
@@ -156,6 +159,8 @@ public class SnakeGame extends Application {
 
             if (tail.getTranslateX() < 0 || tail.getTranslateX() > APP_W
                     || tail.getTranslateY() < 0 || tail.getTranslateY() > APP_H) {
+                score = 0;
+                scoreText.setText("Pontuação: " + score);
                 try {
                     restartGame();
                 } catch (Exception ex) {
@@ -166,6 +171,8 @@ public class SnakeGame extends Application {
             
             if (tail.getTranslateX() == poison.getTranslateX()
                     && tail.getTranslateY() == poison.getTranslateY()) {
+                score = 0;
+                scoreText.setText("Pontuação: " + score);
                 try {
                     restartGame();
                 } catch (Exception ex) {
@@ -202,7 +209,7 @@ public class SnakeGame extends Application {
                 poisonText.setLayoutY(fy);
 
                 score++;
-                scoreText.setText(Integer.toString(score));
+                scoreText.setText("Pontuação: " + score);
 
                 // snake.add(rect); //adding rectangle to snake
             }
