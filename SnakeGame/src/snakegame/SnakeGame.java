@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
@@ -40,7 +41,10 @@ public class SnakeGame extends Application {
     public static final int BLOCK_SIZE = 25;//size of 1 block
     public static final int APP_W = 20 * BLOCK_SIZE; // application width
     public static final int APP_H = 15 * BLOCK_SIZE; // application height
-
+    
+    Stage window;
+    Scene sMenu, sTutorial,sJogo;
+    
     public static int score = 0;
     public static int number1 = 1;
     public static int number2 = 1;
@@ -241,74 +245,81 @@ public class SnakeGame extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        thestage = primaryStage;
-        Scene scene = new Scene(createContent());
-        scene.setOnKeyPressed(event -> {
-            if (!moved) {
+         window = primaryStage;
+         sJogo = new Scene(createContent());
+   
+         sJogo.setOnKeyPressed(event ->{
+            if(!moved)
                 return;
-            }
             switch (event.getCode()) {
                 case W:
-                    if (direction != Direction.DOWN) {
+                    if (direction != Direction.DOWN)
                         direction = Direction.UP;
-                    }
                     break;
                 case S:
-                    if (direction != Direction.UP) {
+                    if (direction != Direction.UP)
                         direction = Direction.DOWN;
-                    }
                     break;
                 case A:
-                    if (direction != Direction.RIGHT) {
+                    if(direction != Direction.RIGHT)
                         direction = Direction.LEFT;
-                    }
                     break;
                 case D:
-                    if (direction != Direction.LEFT) {
+                    if(direction != Direction.LEFT)
                         direction = Direction.RIGHT;
-                    }
                     break;
             }
-            moved = false;
+                moved = false;
         });
-        Button btn = new Button();
-        btn.setText("Jogar");
-        btn.setTranslateX(-100);
-        btn.setTranslateY(180);
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                primaryStage.setTitle("Snake game");
-                primaryStage.setResizable(false);
-                primaryStage.setScene(scene);
-                primaryStage.show();
+         Button btnJogar = new Button();
+         btnJogar.setText("Jogar");
+         btnJogar.setTranslateX(-100);
+         btnJogar.setTranslateY(180);
+         btnJogar.setOnAction(new EventHandler<ActionEvent>() {
+             
+            
+              @Override
+             public void handle(ActionEvent event) {
+                window.setResizable(false);
+                window.setScene(sJogo);
+                window.show();
                 startGame();
-            }
-        });
-
-        Button btnTutorial = new Button();
-        btnTutorial.setText("Tutorial");
-        btnTutorial.setTranslateX(100);
-        btnTutorial.setTranslateY(180);
-        btnTutorial.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                //tutorial   
-            }
-        });
-
-        StackPane root = new StackPane();
-        root.setId("pane");
-        root.getChildren().add(btn);
-        root.getChildren().add(btnTutorial);
-
-        Scene scene2 = new Scene(root, 900, 500);
-        scene2.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
-        primaryStage.setTitle("Menu Snack Game");
-        primaryStage.setScene(scene2);
-        primaryStage.show();
+             }
+         });
+       
+         Button btnTutorial = new Button("Tutorial");
+         btnTutorial.setTranslateX(100);
+         btnTutorial.setTranslateY(180);
+         btnTutorial.setOnAction(e -> window.setScene(sTutorial)); 
+              
+         StackPane root =new StackPane();
+         root.setId("pane");
+         root.getChildren().add(btnTutorial);
+         root.getChildren().add(btnJogar);
+ 
+         sMenu = new Scene(root, 900,500);
+         sMenu.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
+         
+         Button btnBack = new Button("Voltar");
+         btnBack.setTranslateX(0);
+         btnBack.setTranslateY(185);
+         btnBack.setOnAction(e-> window.setScene(sMenu)); 
+         
+         StackPane tutorialPane = new StackPane();
+         Label lregra01 = new Label("label samples 1");
+         lregra01.setTranslateY(100);
+         
+         Label lregra02 = new Label("label samples 2");
+         lregra01.setTranslateY(-100);
+          
+         tutorialPane.setId("paneTuto");
+         tutorialPane.getChildren().addAll(btnBack,lregra01,lregra02);
+         sTutorial = new Scene(tutorialPane,770,500);
+         sTutorial.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
+         
+         window.setScene(sMenu);
+         window.setTitle("Menu do jogo");	
+         window.show();
     }
 
     /**
