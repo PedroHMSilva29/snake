@@ -59,7 +59,7 @@ public class SnakeGame extends Application {
     private ObservableList<Node> snake; // we will display and iterate over it nad our snake body, we will iterate over it.
 
     private Parent createContent() throws Exception {
-
+        buildQuestion();
         Pane root = new Pane();
         root.setPrefSize(APP_W, APP_H); // setting pane's size
         root.setBackground(new Background(new BackgroundFill(Color.web("#eee"), CornerRadii.EMPTY, Insets.EMPTY)));
