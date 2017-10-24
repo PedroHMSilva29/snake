@@ -300,6 +300,7 @@ public class SnakeGame extends Application {
         });
          Button btnJogar = new Button();
          btnJogar.setText("Jogar");
+         btnJogar.setId("btnJogar");
          btnJogar.setTranslateX(-100);
          btnJogar.setTranslateY(180);
          btnJogar.setOnAction(new EventHandler<ActionEvent>() {
@@ -315,6 +316,7 @@ public class SnakeGame extends Application {
          });
        
          Button btnTutorial = new Button("Tutorial");
+         btnTutorial.setId("btnTutorial");
          btnTutorial.setTranslateX(100);
          btnTutorial.setTranslateY(180);
          btnTutorial.setOnAction(e -> window.setScene(sTutorial)); 
@@ -328,20 +330,22 @@ public class SnakeGame extends Application {
          sMenu.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
          
          Button btnBack = new Button("Voltar");
+         btnBack.setId("btnBack");
          btnBack.setTranslateX(0);
          btnBack.setTranslateY(185);
          btnBack.setOnAction(e-> window.setScene(sMenu)); 
          
          StackPane tutorialPane = new StackPane();
-         Label lregra01 = new Label("label samples 1");
-         lregra01.setTranslateY(100);
+         //Label lregra01 = new Label("label samples 1");
+         //lregra01.setTranslateY(100);
          
-         Label lregra02 = new Label("label samples 2");
-         lregra01.setTranslateY(-100);
+         //Label lregra02 = new Label("label samples 2");
+         //lregra01.setTranslateY(-100);
           
          tutorialPane.setId("paneTuto");
-         tutorialPane.getChildren().addAll(btnBack,lregra01,lregra02);
-         sTutorial = new Scene(tutorialPane,770,500);
+         //tutorialPane.getChildren().addAll(btnBack,lregra01,lregra02);
+         tutorialPane.getChildren().addAll(btnBack);
+         sTutorial = new Scene(tutorialPane,900,500);
          sTutorial.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
          
          window.setScene(sMenu);
