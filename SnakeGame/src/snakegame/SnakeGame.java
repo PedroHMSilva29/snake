@@ -1,5 +1,7 @@
 package snakegame;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
@@ -27,6 +29,19 @@ import javafx.util.Duration;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import java.net.URL;
+import javax.swing.*;
+import javax.sound.sampled.*;
+import java.net.URL;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
+import javafx.stage.Stage;
 
 /**
  *
@@ -37,10 +52,19 @@ public class SnakeGame extends Application {
     public enum Direction { //pre defined states!
         UP, DOWN, LEFT, RIGHT
     }
-
+    final URL resource = getClass().getResource("beep-02.wav");
+    final AudioClip clip = new AudioClip(resource.toString());
+    
+    final URL resource3 = getClass().getResource("20281__koops__apple-crunch-18.wav");
+    final AudioClip clip3 = new AudioClip(resource3.toString());
+    
+    final URL resource2 = getClass().getResource("404743__owlstorm__retro-video-game-sfx-fail.wav");
+    final AudioClip clip2 = new AudioClip(resource2.toString());
+            
+            
     public static final int BLOCK_SIZE = 25;//size of 1 block
-    public static final int APP_W = 20 * BLOCK_SIZE; // application width
-    public static final int APP_H = 15 * BLOCK_SIZE; // application height
+    public static final int APP_W = 40 * BLOCK_SIZE; // application width
+    public static final int APP_H = 20 * BLOCK_SIZE; // application height
     
     Stage window;
     Scene sMenu, sTutorial,sJogo;
@@ -59,7 +83,7 @@ public class SnakeGame extends Application {
     private ObservableList<Node> snake; // we will display and iterate over it nad our snake body, we will iterate over it.
 
     private Parent createContent() throws Exception {
-
+        buildQuestion();
         Pane root = new Pane();
         root.setPrefSize(APP_W, APP_H); // setting pane's size
         root.setBackground(new Background(new BackgroundFill(Color.web("#eee"), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -151,6 +175,7 @@ public class SnakeGame extends Application {
             for (Node rect : snake) {
                 if (rect != tail && tail.getTranslateX() == rect.getTranslateX()
                         && tail.getTranslateY() == rect.getTranslateY()) {
+                    clip2.play(1.0);
                     score = 0;
                     scoreText.setText("Pontuação: " + score);
                     try {
@@ -166,6 +191,7 @@ public class SnakeGame extends Application {
             if (tail.getTranslateX() < 0 || tail.getTranslateX() > APP_W
                     || tail.getTranslateY() < 0 || tail.getTranslateY() > APP_H) {
                 score = 0;
+                clip2.play(1.0);
                 scoreText.setText("Pontuação: " + score);
                 try {
                     restartGame();
@@ -177,6 +203,7 @@ public class SnakeGame extends Application {
             
             if (tail.getTranslateX() == poison.getTranslateX()
                     && tail.getTranslateY() == poison.getTranslateY()) {
+                clip2.play(1.0);
                 score = 0;
                 scoreText.setText("Pontuação: " + score);
                 try {
@@ -189,6 +216,28 @@ public class SnakeGame extends Application {
 
             if (tail.getTranslateX() == food.getTranslateX()
                     && tail.getTranslateY() == food.getTranslateY()) {
+                
+                // Carrega o arquivo de áudio (não funciona com .mp3, só .wav) 
+                
+                clip3.play(2.0);
+       // URL oUrl;
+               // try {
+                   // oUrl = new URL("http://www.soundjay.com/button/beep-02.wav");
+                  //  Clip oClip = AudioSystem.getClip();
+                 //   AudioInputStream oStream = AudioSystem.getAudioInputStream(oUrl);
+                  //  oClip.open(oStream);
+                  //  oClip.loop(0); // Toca uma vez
+               // } catch (MalformedURLException ex) {
+               //     Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
+              //  } catch (LineUnavailableException ex) {
+               //     Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
+              //  } catch (UnsupportedAudioFileException ex) {
+               //     Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
+              //  } catch (IOException ex) {
+                //    Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
+                //}
+       
+
                 int fx = (int) (Math.random() * (APP_W /*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
                 int fy = 25 + (int) (Math.random() * (APP_H - 25/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
 
