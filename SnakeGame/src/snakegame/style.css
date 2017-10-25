@@ -13,3 +13,39 @@
     -fx-background-position: center center;
     -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
 }
+
+#btnJogar {
+     -fx-background-color: darkolivegreen;
+     -fx-text-fill: white;
+     -fx-border-color: white;
+     -fx-border-width: 2;
+     -fx-font-size: 15;
+ }
+ 
+ #btnTutorial {
+     -fx-background-color: darkolivegreen;
+     -fx-text-fill: white;
+     -fx-border-color: white;
+     -fx-border-width: 2;
+     -fx-font-size: 15;
+ }
+ 
+ #food {
+     -fx-background-image: url("apple.png");
+     -fx-background-size: 5 5;
+     -fx-background-position: center;
+ }
+ 
+ #field{
+    -fx-background-image: url("unnamed.png");
+    -fx-background-repeat: stretch;   
+    -fx-background-size: 900 630 ;
+    -fx-background-position: center center;
+}
+
+ #apple{
+    -fx-background-image: url("aa.png");
+    -fx-background-repeat: stretch;   
+    -fx-background-size: 200 200 ;
+    -fx-background-position: center center;
+}

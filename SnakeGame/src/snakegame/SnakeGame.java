@@ -39,8 +39,11 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
+import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 
 /**
@@ -62,9 +65,9 @@ public class SnakeGame extends Application {
     final AudioClip clip2 = new AudioClip(resource2.toString());
             
             
-    public static final int BLOCK_SIZE = 25;//size of 1 block
-    public static final int APP_W = 40 * BLOCK_SIZE; // application width
-    public static final int APP_H = 20 * BLOCK_SIZE; // application height
+    public static final int BLOCK_SIZE = 29;//size of 1 block
+    public static final int APP_W = 31 * BLOCK_SIZE; // application width
+    public static final int APP_H = 21 * BLOCK_SIZE; // application height
     
     Stage window;
     Scene sMenu, sTutorial,sJogo;
@@ -85,14 +88,17 @@ public class SnakeGame extends Application {
     private Parent createContent() throws Exception {
         buildQuestion();
         Pane root = new Pane();
+       
         root.setPrefSize(APP_W, APP_H); // setting pane's size
-        root.setBackground(new Background(new BackgroundFill(Color.web("#eee"), CornerRadii.EMPTY, Insets.EMPTY)));
-
+       // root.setBackground(new Background(new BackgroundFill(Color.web("#eee"), CornerRadii.EMPTY, Insets.EMPTY)));
+        root.setId("field");
+        
         //root.set
         Group snakeBody = new Group(); // we get children from the group and assign them to our snake list below
         snake = snakeBody.getChildren();// snake list
-
-        Rectangle scoreBar = new Rectangle(APP_W, 25);
+      
+            
+        Rectangle scoreBar = new Rectangle(APP_W, BLOCK_SIZE);
         scoreBar.setFill(Color.web("#D3D3D3"));
         Text scoreText = new Text("Pontuação: " + score);
         scoreText.setText("Pontuação: " + score);
@@ -105,8 +111,13 @@ public class SnakeGame extends Application {
 
         Rectangle food = new Rectangle(BLOCK_SIZE, BLOCK_SIZE);
         food.setFill(Color.web("#fa6b6b"));
+        Image image = new Image("file:C:\\Users\\Familia\\Documents\\NetBeansProjects\\snakeV2\\snake\\SnakeGame\\src\\snakegame\\aa.png");
+        
+        ImagePattern imagePattern = new ImagePattern(image);
+        food.setFill(imagePattern);
+       
         int tx = (int) (Math.random() * (APP_W/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
-        int ty = 25 + (int) (Math.random() * (APP_H - 25/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
+        int ty = BLOCK_SIZE + (int) (Math.random() * (APP_H - 25/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
         food.setTranslateX(tx);
         food.setTranslateY(ty); // setting x, and y of food to random value);
         int foodNumber = answer;
@@ -118,9 +129,9 @@ public class SnakeGame extends Application {
 
         // Wrong Answer
         Rectangle poison = new Rectangle(BLOCK_SIZE, BLOCK_SIZE);
-        poison.setFill(Color.web("#fa6b6b"));
+        poison.setFill(imagePattern);
         tx = (int) (Math.random() * (APP_W/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
-        ty =  25 + (int) (Math.random() * (APP_H - 25/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
+        ty =  BLOCK_SIZE + (int) (Math.random() * (APP_H - BLOCK_SIZE/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
         
         poison.setTranslateX(tx);
         poison.setTranslateY(ty); // setting x, and y of poison to random value);
@@ -136,10 +147,14 @@ public class SnakeGame extends Application {
         poisonText.setLayoutX(tx + 5);
         poisonText.setLayoutY(ty);
 
-        KeyFrame frame = new KeyFrame(/* KeyFrame is like a single frame in animation!!!*/Duration.seconds(0.20 /*To increase difficulty lower the value*/), event -> {
+        KeyFrame frame = new KeyFrame(/* KeyFrame is like a single frame in animation!!!*/Duration.seconds(0.15 /*To increase difficulty lower the value*/), event -> {
             if (!running) {
                 return; //if not running just simple return
             }
+              if(snake.size() ==1){
+            Rectangle sizeSnake = new Rectangle(BLOCK_SIZE, BLOCK_SIZE);
+            snake.add(sizeSnake);
+        }
             System.out.println("size:" + snake.size());
             boolean toRemove = snake.size() > 1; // at least two blocks in the snake body;
             Node tail = toRemove ? snake.remove(snake.size() - 1) : snake.get(0); //
@@ -220,26 +235,11 @@ public class SnakeGame extends Application {
                 // Carrega o arquivo de áudio (não funciona com .mp3, só .wav) 
                 
                 clip3.play(2.0);
-       // URL oUrl;
-               // try {
-                   // oUrl = new URL("http://www.soundjay.com/button/beep-02.wav");
-                  //  Clip oClip = AudioSystem.getClip();
-                 //   AudioInputStream oStream = AudioSystem.getAudioInputStream(oUrl);
-                  //  oClip.open(oStream);
-                  //  oClip.loop(0); // Toca uma vez
-               // } catch (MalformedURLException ex) {
-               //     Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
-              //  } catch (LineUnavailableException ex) {
-               //     Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
-              //  } catch (UnsupportedAudioFileException ex) {
-               //     Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
-              //  } catch (IOException ex) {
-                //    Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
-                //}
+       
        
 
                 int fx = (int) (Math.random() * (APP_W /*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
-                int fy = 25 + (int) (Math.random() * (APP_H - 25/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
+                int fy = BLOCK_SIZE + (int) (Math.random() * (APP_H - 25/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
 
                 Rectangle rect = new Rectangle(BLOCK_SIZE, BLOCK_SIZE);
                 rect.setTranslateX(tailX);
@@ -256,7 +256,7 @@ public class SnakeGame extends Application {
                 food.setTranslateY(fy); // setting x, and y of food to random value);
 
                 fx = (int) (Math.random() * (APP_W/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
-                fy = 25 + (int) (Math.random() * (APP_H - 25/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
+                fy = BLOCK_SIZE + (int) (Math.random() * (APP_H - BLOCK_SIZE/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
                 poison.setTranslateX(fx);
                 poison.setTranslateY(fy); // setting x, and y of poison to random value);
                 int poisonNumber2;
@@ -358,6 +358,9 @@ public class SnakeGame extends Application {
               @Override
              public void handle(ActionEvent event) {
                 window.setResizable(false);
+                StackPane root = new StackPane();
+                root.setId("field");
+                sJogo.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
                 window.setScene(sJogo);
                 window.show();
                 startGame();
