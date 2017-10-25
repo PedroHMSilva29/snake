@@ -1,6 +1,7 @@
 package snakegame;
 
 import java.io.IOException;
+import static java.lang.Math.random;
 import java.net.MalformedURLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -120,7 +121,7 @@ public class SnakeGame extends Application {
         food.setFill(imagePattern);
        
         int tx = (int) (Math.random() * (APP_W/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
-        int ty = BLOCK_SIZE + (int) (Math.random() * (APP_H - 25/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
+        int ty = BLOCK_SIZE + (int) (Math.random() * (APP_H - BLOCK_SIZE/*-BLOCK_SIZE*/)) / BLOCK_SIZE * BLOCK_SIZE;
         food.setTranslateX(tx);
         food.setTranslateY(ty); // setting x, and y of food to random value);
         int foodNumber = answer;
@@ -144,7 +145,8 @@ public class SnakeGame extends Application {
         int poisonNumber;
         
         do{
-        poisonNumber = (int) (Math.random() * 30);
+        poisonNumber = (int) (Math.random()*40)+5;
+    
         }while(poisonNumber ==foodNumber || poisonNumber==0);
         
         Text poisonText = new Text(Integer.toString(poisonNumber));// setting the number of the food
@@ -271,7 +273,7 @@ public class SnakeGame extends Application {
                 poison.setTranslateY(fy); // setting x, and y of poison to random value);
                 int poisonNumber2;
                 do{
-                    poisonNumber2 = (int) (Math.random() * 30);
+                    poisonNumber2 = (int) (Math.random() * 40)+5;
                 }while(poisonNumber2 ==answer || poisonNumber2 ==0);
                 
                 poisonText.setText(Integer.toString(poisonNumber2));
@@ -392,7 +394,7 @@ public class SnakeGame extends Application {
          sMenu.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
          
          Button btnBack = new Button("Voltar");
-         btnBack.setId("btnBack");
+         btnBack.setId("btnTutorial");
          btnBack.setTranslateX(0);
          btnBack.setTranslateY(185);
          btnBack.setOnAction(e-> window.setScene(sMenu)); 
