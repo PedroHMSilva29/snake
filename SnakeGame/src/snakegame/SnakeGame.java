@@ -101,11 +101,14 @@ public class SnakeGame extends Application {
         Rectangle scoreBar = new Rectangle(APP_W, BLOCK_SIZE);
         scoreBar.setFill(Color.web("#D3D3D3"));
         Text scoreText = new Text("Pontuação: " + score);
-        scoreText.setText("Pontuação: " + score);
+        scoreText.setStyle("-fx-font-weight: bold;");
+        scoreText.setStyle("-fx-font: 30px Verdana;");
         scoreText.setTextOrigin(VPos.TOP);
-        scoreText.setLayoutX(APP_W - 100);
+        scoreText.setLayoutX(APP_W - 250);
 
         Text question = new Text("Quanto é " + number1 + " + " + number2 + " ? ");
+        question.setStyle("-fx-font-weight: bold;");
+        question.setStyle("-fx-font: 30px Verdana;");
         question.setTextOrigin(VPos.TOP);
         question.setLayoutX(20);
 
@@ -123,6 +126,9 @@ public class SnakeGame extends Application {
         int foodNumber = answer;
         Text foodText = new Text(Integer.toString(foodNumber));// setting the number of the food
         foodText.setFill(Color.web("#fff"));
+        foodText.setStyle("-fx-font-weight: bold;");
+        //foodText.setStyle("-fx-font-size:18;");
+        foodText.setStyle("-fx-font: 30px Verdana;");
         foodText.setTextOrigin(VPos.TOP);
         foodText.setLayoutX(tx + 5);
         foodText.setLayoutY(ty);
@@ -143,6 +149,8 @@ public class SnakeGame extends Application {
         
         Text poisonText = new Text(Integer.toString(poisonNumber));// setting the number of the food
         poisonText.setFill(Color.web("#fff"));
+        poisonText.setStyle("-fx-font-weight: bold;");
+        poisonText.setStyle("-fx-font: 30px Verdana;");
         poisonText.setTextOrigin(VPos.TOP);
         poisonText.setLayoutX(tx + 5);
         poisonText.setLayoutY(ty);
@@ -193,6 +201,8 @@ public class SnakeGame extends Application {
                     clip2.play(1.0);
                     score = 0;
                     scoreText.setText("Pontuação: " + score);
+                    scoreText.setStyle("-fx-font-weight: bold;");
+                     scoreText.setStyle("-fx-font: 30px Verdana;");
                     try {
                         // tail name is little confusing, cause it must be a head now!!!
                         restartGame();
